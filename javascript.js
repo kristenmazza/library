@@ -5,12 +5,12 @@ let myLibrary = [
   {'title': 'Me Talk Pretty One Day', 'author': 'David Sedaris', 'pages': '402'},
 ];
 
-// function Book(title, author, pages, read) {
-//   this.title = title;
-//   this.author = author;
-//   this.pages = pages;
-//   this.read = read;
-// }
+function Book(title, author, pages, read) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+}
 
 function addBookToLibrary(data) {
   for (let i = 0; i < data.length; i++) {
@@ -57,3 +57,4 @@ function addBookToLibrary(data) {
 }
 
 addBookToLibrary(myLibrary);
+
