@@ -5,56 +5,58 @@ let myLibrary = [
   {'title': 'Me Talk Pretty One Day', 'author': 'David Sedaris', 'pages': '402'},
 ];
 
-function Book(title, author, pages, read) {
+
+function addBookToLibrary(book) {
+}
+
+
+
+function Book(title, author, pages, read, id) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.id = id;
+
+  const obj = {'title': this.title, 'author': this.author, 'pages': this.pages, 'read': read, 'id': this.id};
+  myLibrary.push(obj);
+  console.log(myLibrary);
 }
 
-function addBookToLibrary(data) {
-  for (let i = 0; i < data.length; i++) {
+myLibrary.forEach((book) => addBookToLibrary(book));
 
-    const cardDiv = document.createElement('div');
-    document.getElementById('book-cards').appendChild(cardDiv);
-    cardDiv.classList.add('book-card');
-    cardDiv.setAttribute('id', `card-${i}`);
+const form = document.querySelector('form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
 
-    const card = document.getElementById(`card-${i}`);
-    const bookTitle = document.createElement('div');
-    card.appendChild(bookTitle);
-    bookTitle.textContent = `${data[i].title}`;
-    bookTitle.classList.add('book-title');
+  const bookTitle = document.getElementById('title').value;
+  console.log(bookTitle);
 
-    const bookAuthor = document.createElement('div');
-    card.appendChild(bookAuthor);
-    bookAuthor.textContent = `${data[i].author}`;
-    bookAuthor.classList.add('book-author');
+  const bookAuthor = document.getElementById('author').value;
+  console.log(bookAuthor);
 
-    const bookPages = document.createElement('div');
-    card.appendChild(bookPages);
-    bookPages.textContent = `${data[i].pages} pages`;
-    bookPages.classList.add('book-pages');
+  const bookPages = document.getElementById('pages').value;
+  console.log(bookPages);
 
-    const buttonsDiv = document.createElement('div');
-    card.appendChild(buttonsDiv);
-    buttonsDiv.classList.add('book-card-buttons')
+  const bookRead = document.getElementById('read');
+  console.log(bookRead.checked);
 
-    const readButton = document.createElement('button');
-    buttonsDiv.appendChild(readButton);
-    readButton.classList.add('read-toggle');
-    readButton.innerText = 'Read';
+  let readIndicator = "";
 
-    const deleteButton = document.createElement('button');
-    buttonsDiv.appendChild(deleteButton);
-    deleteButton.classList.add('delete');
-    
-    const deleteIcon = document.createElement('img');
-    deleteIcon.setAttribute('src', 'images/trash-can-regular.png');
-    deleteButton.appendChild(deleteIcon);
-    deleteIcon.classList.add('delete-img')
+  if(bookRead.checked === true) {
+    readIndicator = "Read";
+    console.log(readIndicator);
+  } 
+  else {
+    readIndicator = "Not Read";
+    console.log(readIndicator);
   }
-}
 
-addBookToLibrary(myLibrary);
+  const bookId = myLibrary.length + 1;
+
+  const book = new Book(bookTitle, bookAuthor, bookPages, readIndicator, bookId);
+
+  form.reset();
+})
+
 
