@@ -1,16 +1,57 @@
-let myLibrary = [
-  {'title': 'White Oleander', 'author': 'Janet Fitch', 'pages': '446'},
-  {'title': 'Me Talk Pretty One Day', 'author': 'David Sedaris', 'pages': '402'},
-  {'title': 'White Oleander', 'author': 'Janet Fitch', 'pages': '446'},
-  {'title': 'Me Talk Pretty One Day', 'author': 'David Sedaris', 'pages': '402'},
-];
-
+let myLibrary = [];
 
 function addBookToLibrary(book) {
+  // Create book card to display in library
+  const cardDiv = document.createElement("div");
+  document.getElementById("book-cards").appendChild(cardDiv);
+  cardDiv.classList.add("book-card");
+  cardDiv.setAttribute("id", `card-${book.id}`);
+  const card = document.getElementById(`card-${book.id}`);
+
+  // Add title to book card
+  const bookTitle = document.createElement("div");
+  card.appendChild(bookTitle);
+  bookTitle.textContent = `${book.title}`;
+  bookTitle.classList.add("book-title");
+
+  // Add author to book card
+  const bookAuthor = document.createElement("div");
+  card.appendChild(bookAuthor);
+  bookAuthor.textContent = `${book.author}`;
+  bookAuthor.classList.add("book-author");
+
+  // Add pages to book card
+  const bookPages = document.createElement("div");
+  card.appendChild(bookPages);
+  bookPages.textContent = `${book.pages} pages`;
+  bookPages.classList.add("book-pages");
+
+  // Add div for buttons at bottom of card
+  const buttonsDiv = document.createElement("div");
+  card.appendChild(buttonsDiv);
+  buttonsDiv.classList.add("book-card-buttons");
+
+  // Add read/not read button
+  const readButton = document.createElement("button");
+  buttonsDiv.appendChild(readButton);
+  readButton.classList.add("read-toggle");
+  if (book.read === true) {
+    readButton.innerText = "Read";
+  } else {
+    readButton.innerText = "Not Read";
+  }
+  
+  // Add delete button with trash icon
+  const deleteButton = document.createElement("button");
+  buttonsDiv.appendChild(deleteButton);
+  deleteButton.classList.add("delete");
+  const deleteIcon = document.createElement("img");
+  deleteIcon.setAttribute("src", "images/trash-can-regular.png");
+  deleteButton.appendChild(deleteIcon);
+  deleteIcon.classList.add("delete-img");
 }
 
-
-
+// Create object with book info to add to library and myLibrary array
 function Book(title, author, pages, read, id) {
   this.title = title;
   this.author = author;
@@ -20,41 +61,31 @@ function Book(title, author, pages, read, id) {
 
   const obj = {'title': this.title, 'author': this.author, 'pages': this.pages, 'read': read, 'id': this.id};
   myLibrary.push(obj);
-  console.log(myLibrary);
+  addBookToLibrary(obj);
 }
 
-myLibrary.forEach((book) => addBookToLibrary(book));
-
+// Save book infomation from form input to create a new book
 const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const bookTitle = document.getElementById('title').value;
-  console.log(bookTitle);
-
   const bookAuthor = document.getElementById('author').value;
-  console.log(bookAuthor);
-
   const bookPages = document.getElementById('pages').value;
-  console.log(bookPages);
-
   const bookRead = document.getElementById('read');
-  console.log(bookRead.checked);
 
-  let readIndicator = "";
+  let isRead;
 
   if(bookRead.checked === true) {
-    readIndicator = "Read";
-    console.log(readIndicator);
+    isRead = true;
   } 
   else {
-    readIndicator = "Not Read";
-    console.log(readIndicator);
+    isRead = false;
   }
 
   const bookId = myLibrary.length + 1;
 
-  const book = new Book(bookTitle, bookAuthor, bookPages, readIndicator, bookId);
+  const book = new Book(bookTitle, bookAuthor, bookPages, isRead, bookId);
 
   form.reset();
 })
