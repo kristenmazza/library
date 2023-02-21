@@ -45,10 +45,12 @@ function addBookToLibrary(book) {
   const deleteButton = document.createElement("button");
   buttonsDiv.appendChild(deleteButton);
   deleteButton.classList.add("delete");
+  deleteButton.setAttribute("id", `delete-${book.id}`);
   const deleteIcon = document.createElement("img");
   deleteIcon.setAttribute("src", "images/trash-can-regular.png");
   deleteButton.appendChild(deleteIcon);
   deleteIcon.classList.add("delete-img");
+  deleteIcon.setAttribute("id", `delete-img-${book.id}`);
 }
 
 // Create object with book info to add to library and myLibrary array
@@ -89,5 +91,15 @@ form.addEventListener('submit', (e) => {
 
   form.reset();
 })
+
+// Delete book card when delete button or trash can icon is clicked
+const container = document.querySelector('#book-cards');
+container.addEventListener('click', (e) => {
+  if (e.target.classList.contains('delete') || e.target.classList.contains('delete-img')) {
+    console.log(e.target.id);
+
+    e.target.closest('.book-card').remove();
+  }
+});
 
 
