@@ -136,6 +136,14 @@ button:hover {
     font-family: inherit;
 }
 
+.not-read {
+    background-color:rgb(231, 178, 170);
+}
+
+.read {
+    background-color:rgb(191, 222, 183);
+}
+
 .book-card-buttons .delete {
     flex: 1;
     display: flex;
@@ -211,9 +219,17 @@ input[type=text], input[type=number] {
     min-width: 15rem;
     height: 30px;
     font-size: 1.2rem;
+    outline: none;
+    border: solid 1px rgb(159, 166, 179);
+    border-radius: 5px;
 }
 
-button.submit {
+input:focus {
+    border: 1px solid rgb(34, 105, 211);
+    box-shadow: 0px 2px 4px rgb(199, 199, 199);
+}
+
+input[type="submit"] {
     background-color: rgb(33, 98, 151);
     padding: 10px 20px;
     border-radius: 8px;
@@ -226,7 +242,7 @@ button.submit {
     margin-top: 20px;
 }
 
-button.submit:hover, .close:hover {
+input[type="submit"]:hover, .close:hover {
     background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
     cursor: pointer;
 }

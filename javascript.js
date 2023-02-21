@@ -96,10 +96,25 @@ form.addEventListener('submit', (e) => {
 const container = document.querySelector('#book-cards');
 container.addEventListener('click', (e) => {
   if (e.target.classList.contains('delete') || e.target.classList.contains('delete-img')) {
-    console.log(e.target.id);
-
     e.target.closest('.book-card').remove();
+  }
+
+  if (e.target.classList.contains('read-toggle')) {
+    if (e.target.textContent === "Read") {
+      e.target.textContent = "Not Read";
+      // e.target.setAttribute("id", "not-read");
+      // e.target.classList.add("not-read")
+      // e.target.classList.remove("read")
+    } else {
+      e.target.textContent = "Read";
+      // e.target.setAttribute("id", "read");
+      // e.target.classList.add("read")
+      // e.target.classList.remove("not-read")
+
+    }
   }
 });
 
-
+function closeModal() {
+  window.location.href = "#";
+}

@@ -30,23 +30,22 @@
             </div>
         </div>
     </main>
-
     
     <div class="form-popup" id="book-form">
         <section class="modal">
             <div class="close-container"><a href="#" class="close">X</a></div>
-            <form>
+            <form onsubmit="closeModal();">
                 <div class="row">
                     <div class="form-title">Add New Book</div>
                 </div>
                 <div class="row">
-                    <input type="text" id="title" name="title" placeholder="Title"/>
+                    <input type="text" id="title" name="title" placeholder="Title" required/>
                 </div>
                 <div class="row">
-                    <input type="text" id="author" name="author" placeholder="Author"/>
+                    <input type="text" id="author" name="author" placeholder="Author" required/>
                 </div>
                 <div class="row">
-                    <input type="number" id="pages" name="pages" placeholder="Pages"/>
+                    <input type="number" id="pages" name="pages" placeholder="Pages" required/>
                 </div>
                 <div class="row">
                     <div class="checkboxes">
@@ -55,13 +54,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button type="submit" value="submit" class="submit" onclick="window.location.href = '#';">Submit</button>
+                    <input type="submit" value="Submit" class="submit">
                 </div>
             </form>
         </section>
     </div>
     
-
     <footer>
         <div class="container">
             <div class=footer-text>created by: kristenmazza <a href="https://github.com/kristenmazza"><img src="images/github-mark-15px.png"></a></div>
