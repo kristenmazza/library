@@ -35,7 +35,7 @@ function addBookToLibrary(book) {
   const readButton = document.createElement("button");
   buttonsDiv.appendChild(readButton);
   readButton.classList.add("read-toggle");
-  if (book.read === true) {
+  if (book.read) {
     readButton.innerText = "Read";
   } else {
     readButton.innerText = "Not Read";
@@ -53,17 +53,13 @@ function addBookToLibrary(book) {
   deleteIcon.setAttribute("id", `delete-img-${book.id}`);
 }
 
-// Create object with book info to add to library and myLibrary array
+// Create new instance of a book
 function Book(title, author, pages, read, id) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
   this.id = id;
-
-  const obj = {'title': this.title, 'author': this.author, 'pages': this.pages, 'read': read, 'id': this.id};
-  myLibrary.push(obj);
-  addBookToLibrary(obj);
 }
 
 // Save book infomation from form input to create a new book
@@ -89,6 +85,8 @@ form.addEventListener('submit', (e) => {
 
   const book = new Book(bookTitle, bookAuthor, bookPages, isRead, bookId);
 
+  myLibrary.push(book);
+  addBookToLibrary(book);
   form.reset();
 })
 
@@ -100,7 +98,7 @@ container.addEventListener('click', (e) => {
   }
 
   if (e.target.classList.contains('read-toggle')) {
-    if (e.target.textContent === "Read") {
+    if (e.target.textContent) {
       e.target.textContent = "Not Read";
       // e.target.setAttribute("id", "not-read");
       // e.target.classList.add("not-read")
