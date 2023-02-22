@@ -1,5 +1,18 @@
-let myLibrary = [];
-let bookCount = 0;
+// Create new instance of a book
+function Book(title, author, pages, read, id) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = read;
+  this.id = id;
+}
+
+Book.prototype.setReadStatus = function(isRead) {
+  this.read = isRead;
+}
+
+let myLibrary = [new Book("Me Talk Pretty One Day", "David Sedaris", "274", true, 0), new Book("White Oleander", "Janet Fitch", 480, false, 1), new Book ("A Man Called Ove", "Fredrik Backman", "337", false, 2)];
+let bookCount = 3;
 
 function addBookToLibrary(book) {
   // Create book card to display in library
@@ -65,19 +78,6 @@ function renderBooks() {
   myLibrary.forEach(book => addBookToLibrary(book));
 }
 
-// Create new instance of a book
-function Book(title, author, pages, read, id) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.id = id;
-}
-
-Book.prototype.setReadStatus = function(isRead) {
-  this.read = isRead;
-}
-
 // Save book infomation from form input to create a new book
 const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
@@ -126,3 +126,5 @@ container.addEventListener('click', (e) => {
 function closeModal() {
   window.location.href = "#";
 }
+
+renderBooks();
