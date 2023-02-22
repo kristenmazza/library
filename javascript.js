@@ -1,4 +1,5 @@
 let myLibrary = [];
+let bookCount = 0;
 
 function addBookToLibrary(book) {
   // Create book card to display in library
@@ -35,6 +36,7 @@ function addBookToLibrary(book) {
   const readButton = document.createElement("button");
   buttonsDiv.appendChild(readButton);
   readButton.classList.add("read-toggle");
+  readButton.setAttribute("data-id", `${book.id}`);
   if (book.read) {
     readButton.innerText = "Read";
   } else {
@@ -45,12 +47,22 @@ function addBookToLibrary(book) {
   const deleteButton = document.createElement("button");
   buttonsDiv.appendChild(deleteButton);
   deleteButton.classList.add("delete");
-  deleteButton.setAttribute("id", `delete-${book.id}`);
+  deleteButton.setAttribute("data-delete-id", `${book.id}`);
   const deleteIcon = document.createElement("img");
   deleteIcon.setAttribute("src", "images/trash-can-regular.png");
   deleteButton.appendChild(deleteIcon);
   deleteIcon.classList.add("delete-img");
-  deleteIcon.setAttribute("id", `delete-img-${book.id}`);
+  deleteIcon.setAttribute("data-delete-id", `${book.id}`);
+}
+
+// Render all books in the UI, removing any existing books from the DOM first
+function renderBooks() {
+  const books = document.getElementById("book-cards");
+  while (books.hasChildNodes()) {
+    books.removeChild(books.firstChild);
+  }
+
+  myLibrary.forEach(book => addBookToLibrary(book));
 }
 
 // Create new instance of a book
@@ -60,6 +72,10 @@ function Book(title, author, pages, read, id) {
   this.pages = pages;
   this.read = read;
   this.id = id;
+}
+
+Book.prototype.setReadStatus = function(isRead) {
+  this.read = isRead;
 }
 
 // Save book infomation from form input to create a new book
@@ -74,19 +90,20 @@ form.addEventListener('submit', (e) => {
 
   let isRead;
 
-  if(bookRead.checked === true) {
+  if(bookRead.checked) {
     isRead = true;
   } 
   else {
     isRead = false;
   }
 
-  const bookId = myLibrary.length + 1;
+  const bookId = bookCount;
+  bookCount++;
 
   const book = new Book(bookTitle, bookAuthor, bookPages, isRead, bookId);
 
   myLibrary.push(book);
-  addBookToLibrary(book);
+  renderBooks();
   form.reset();
 })
 
@@ -94,22 +111,15 @@ form.addEventListener('submit', (e) => {
 const container = document.querySelector('#book-cards');
 container.addEventListener('click', (e) => {
   if (e.target.classList.contains('delete') || e.target.classList.contains('delete-img')) {
-    e.target.closest('.book-card').remove();
+    const bookToDelete = myLibrary.findIndex(book => book.id.toString() === e.target.getAttribute("data-delete-id"));
+    myLibrary.splice(bookToDelete, 1);
+    renderBooks();
   }
 
   if (e.target.classList.contains('read-toggle')) {
-    if (e.target.textContent) {
-      e.target.textContent = "Not Read";
-      // e.target.setAttribute("id", "not-read");
-      // e.target.classList.add("not-read")
-      // e.target.classList.remove("read")
-    } else {
-      e.target.textContent = "Read";
-      // e.target.setAttribute("id", "read");
-      // e.target.classList.add("read")
-      // e.target.classList.remove("not-read")
-
-    }
+    const bookToUpdate = myLibrary.find(book => book.id.toString() === e.target.getAttribute("data-id"));
+    bookToUpdate.setReadStatus(!bookToUpdate.read);
+    renderBooks();
   }
 });
 
