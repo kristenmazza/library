@@ -1,17 +1,19 @@
 // Create new instance of a book
-function Book(title, author, pages, read, id) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.id = id;
+class Book {
+  constructor(title, author, pages, read, id) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = id;
+  }
+  
+  setReadStatus(isRead) {
+    this.read = isRead;
+  }
 }
 
-Book.prototype.setReadStatus = function(isRead) {
-  this.read = isRead;
-}
-
-let myLibrary = [new Book("Me Talk Pretty One Day", "David Sedaris", "274", true, 0), new Book("White Oleander", "Janet Fitch", 480, false, 1), new Book ("A Man Called Ove", "Fredrik Backman", "337", false, 2)];
+const myLibrary = [new Book("Me Talk Pretty One Day", "David Sedaris", "274", true, 0), new Book("White Oleander", "Janet Fitch", 480, false, 1), new Book ("A Man Called Ove", "Fredrik Backman", "337", false, 2)];
 let bookCount = 3;
 
 function addBookToLibrary(book) {
