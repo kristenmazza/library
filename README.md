@@ -1,5 +1,7 @@
 # Library
 
-[Live Demo](https://kristenmazza.github.io/library/) :point_left:
+This simple library allows users to add and remove books as well as modify their read status. Built with HTML, CSS (Grid + Flexbox) and JavaScript.
 
-This simple library allows users to add, remove, and change the read status of books. Built with HTML, CSS (Grid + Flexbox) and JavaScript.
+![Library Demo](./library-demo.gif)
+
+[Live Demo](https://kristenmazza.github.io/library/) :point_left:
