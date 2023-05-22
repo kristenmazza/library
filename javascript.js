@@ -7,13 +7,17 @@ class Book {
     this.read = read;
     this.id = id;
   }
-  
+
   setReadStatus(isRead) {
     this.read = isRead;
   }
 }
 
-const myLibrary = [new Book("Me Talk Pretty One Day", "David Sedaris", "274", true, 0), new Book("White Oleander", "Janet Fitch", 480, false, 1), new Book ("A Man Called Ove", "Fredrik Backman", "337", false, 2)];
+const myLibrary = [
+  new Book("Me Talk Pretty One Day", "David Sedaris", "274", true, 0),
+  new Book("White Oleander", "Janet Fitch", 480, false, 1),
+  new Book("A Man Called Ove", "Fredrik Backman", "337", false, 2),
+];
 let bookCount = 3;
 
 function addBookToLibrary(book) {
@@ -57,7 +61,7 @@ function addBookToLibrary(book) {
   } else {
     readButton.innerText = "Not Read";
   }
-  
+
   // Add delete button with trash icon
   const deleteButton = document.createElement("button");
   buttonsDiv.appendChild(deleteButton);
@@ -77,25 +81,120 @@ function renderBooks() {
     books.removeChild(books.firstChild);
   }
 
-  myLibrary.forEach(book => addBookToLibrary(book));
+  myLibrary.forEach((book) => addBookToLibrary(book));
 }
 
-// Save book infomation from form input to create a new book
-const form = document.querySelector('form');
-form.addEventListener('submit', (e) => {
+const form = document.querySelector("form");
+const title = document.getElementById("title");
+const author = document.getElementById("author");
+const pages = document.getElementById("pages");
+const errorTitle = title.nextElementSibling;
+const errorAuthor = author.nextElementSibling;
+const errorPages = pages.nextElementSibling;
+
+// Explicitly set the valid/invalid class on the input fields
+window.addEventListener("load", () => {
+  const isTitleValid = title.value.length > 0;
+  const isAuthorValid = author.value.length > 0;
+  const isPageNumValid = pages.value.length > 0;
+
+  title.className = isTitleValid ? "valid" : "invalid";
+  author.className = isAuthorValid ? "valid" : "invalid";
+  pages.className = isPageNumValid ? "valid" : "invalid";
+});
+
+// Test if the title field is empty on input
+title.addEventListener("input", () => {
+  const isTitleValid = title.value.length > 0;
+
+  if (isTitleValid) {
+    title.className = "valid";
+    errorTitle.textContent = "";
+    errorTitle.className = "error";
+  } else {
+    title.className = "invalid";
+  }
+});
+
+// Test if the author field is empty on input
+author.addEventListener("input", () => {
+  const isAuthorValid = author.value.length > 0;
+
+  if (isAuthorValid) {
+    author.className = "valid";
+    errorAuthor.textContent = "";
+    errorAuthor.className = "error";
+  } else {
+    author.className = "invalid";
+  }
+});
+
+// Test if the pages field is empty on input
+pages.addEventListener("input", () => {
+  const isPageNumValid = pages.value.length > 0;
+
+  if (isPageNumValid) {
+    pages.className = "valid";
+    errorPages.textContent = "";
+    errorPages.className = "error";
+  } else {
+    pages.className = "invalid";
+  }
+});
+
+function closeModal() {
+  window.location.href = "#";
+}
+
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  const bookTitle = document.getElementById('title').value;
-  const bookAuthor = document.getElementById('author').value;
-  const bookPages = document.getElementById('pages').value;
-  const bookRead = document.getElementById('read');
+  // Check if form input fields are valid on submit
+  const isTitleValid = title.value.length > 0;
+  const isAuthorValid = author.value.length > 0;
+  const isPageNumValid = pages.value.length > 0;
+
+  if (!isTitleValid || !isAuthorValid || !isPageNumValid) {
+    if (!isTitleValid) {
+      title.className = "invalid";
+      errorTitle.textContent = "Please enter a title";
+      errorTitle.className = "error active";
+    }
+    if (!isAuthorValid) {
+      author.className = "invalid";
+      errorAuthor.textContent = "Please enter the author";
+      errorAuthor.className = "error active";
+    }
+    if (!isPageNumValid) {
+      pages.className = "invalid";
+      errorPages.textContent = "Please enter the number of pages";
+      errorPages.className = "error active";
+    }
+    return;
+  }
+
+  // If fields are valid, update class name and text content accordingly
+  title.className = "valid";
+  errorTitle.textContent = "";
+  errorTitle.className = "error";
+  author.className = "valid";
+  errorAuthor.textContent = "";
+  errorAuthor.className = "error";
+  pages.className = "valid";
+  errorPages.textContent = "";
+  errorPages.className = "error";
+
+  // Save book infomation from form input to create a new book
+  const bookTitle = document.getElementById("title").value;
+  const bookAuthor = document.getElementById("author").value;
+  const bookPages = document.getElementById("pages").value;
+  const bookRead = document.getElementById("read");
 
   let isRead;
 
-  if(bookRead.checked) {
+  if (bookRead.checked) {
     isRead = true;
-  } 
-  else {
+  } else {
     isRead = false;
   }
 
@@ -106,27 +205,31 @@ form.addEventListener('submit', (e) => {
 
   myLibrary.push(book);
   renderBooks();
+  closeModal();
   form.reset();
-})
+});
 
 // Delete book card when delete button or trash can icon is clicked
-const container = document.querySelector('#book-cards');
-container.addEventListener('click', (e) => {
-  if (e.target.classList.contains('delete') || e.target.classList.contains('delete-img')) {
-    const bookToDelete = myLibrary.findIndex(book => book.id.toString() === e.target.getAttribute("data-delete-id"));
+const container = document.querySelector("#book-cards");
+container.addEventListener("click", (e) => {
+  if (
+    e.target.classList.contains("delete") ||
+    e.target.classList.contains("delete-img")
+  ) {
+    const bookToDelete = myLibrary.findIndex(
+      (book) => book.id.toString() === e.target.getAttribute("data-delete-id")
+    );
     myLibrary.splice(bookToDelete, 1);
     renderBooks();
   }
 
-  if (e.target.classList.contains('read-toggle')) {
-    const bookToUpdate = myLibrary.find(book => book.id.toString() === e.target.getAttribute("data-id"));
+  if (e.target.classList.contains("read-toggle")) {
+    const bookToUpdate = myLibrary.find(
+      (book) => book.id.toString() === e.target.getAttribute("data-id")
+    );
     bookToUpdate.setReadStatus(!bookToUpdate.read);
     renderBooks();
   }
 });
-
-function closeModal() {
-  window.location.href = "#";
-}
 
 renderBooks();

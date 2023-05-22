@@ -81,7 +81,7 @@ main {
 .btn-add-book:hover {
     background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
     cursor: pointer;
-} 
+}
 
 .add-icon {
     display: flex;
@@ -168,7 +168,7 @@ button:hover {
 
 .book-card .book-author, .book-pages {
     font-size: 1.2rem;
-    
+
 }
 
 .form-popup {
@@ -185,7 +185,7 @@ button:hover {
     transition: opacity 250ms ease;
     background-color: rgba(0,0,0,0.75);
 }
-  
+
 .modal {
     margin: auto;
     width: 25%;
@@ -194,7 +194,7 @@ button:hover {
     background-color: white;
     border-radius: 1.5rem;
 }
-  
+
 .modal-header,
 .modal-content {
     padding: 1.5rem;
@@ -253,7 +253,7 @@ input[type="submit"]:hover, .close:hover {
     font-size: 1.5rem;
 }
 
-.close {    
+.close {
     background-color:rgb(227, 227, 227);
     padding: 5px 15px;
     margin: 20px 20px 0px 0px;
@@ -282,6 +282,8 @@ button.close {
 
 form .row {
     margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-title {
@@ -299,6 +301,28 @@ input.read {
     height: 1.2rem;
 }
 
+input.invalid {
+    border-color: #900;
+}
+
+input:focus.invalid {
+    outline: none;
+}
+
+.error {
+    width: 100%;
+    padding: 0;
+    font-size: 80%;
+    color: rgb(249, 249, 249);
+    background-color: #900;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+
+.error.active {
+    padding: 0.3em;
+}
+
 .checkboxes {
     display: flex;
     justify-content: center;
@@ -312,3 +336,4 @@ footer {
     text-align: center;
     padding: 30px 0px 10px 0px;
 }
+

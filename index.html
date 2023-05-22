@@ -25,27 +25,30 @@
                     <div class="add-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M240 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H176V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H240V80z"/></svg></div>
                     <div class="add-book">Add Book</div>
                 </a>
-                
+
                 <div id="book-cards"></div>
             </div>
         </div>
     </main>
-    
+
     <div class="form-popup" id="book-form">
         <section class="modal">
             <div class="close-container"><a href="#" class="close">X</a></div>
-            <form onsubmit="closeModal();">
+            <form>
                 <div class="row">
                     <div class="form-title">Add New Book</div>
                 </div>
                 <div class="row">
-                    <input type="text" id="title" name="title" placeholder="Title" required/>
+                    <input type="text" id="title" name="title" placeholder="Title" novalidate/>
+                    <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="row">
-                    <input type="text" id="author" name="author" placeholder="Author" required/>
+                    <input type="text" id="author" name="author" placeholder="Author" novalidate/>
+                    <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="row">
-                    <input type="number" id="pages" name="pages" placeholder="Pages" required/>
+                    <input type="number" id="pages" name="pages" placeholder="Pages" onkeydown="return event.keyCode !== 69" novalidate/>
+                    <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="row">
                     <div class="checkboxes">
@@ -59,7 +62,7 @@
             </form>
         </section>
     </div>
-    
+
     <footer>
         <div class="container">
             <div class=footer-text>created by: kristenmazza <a href="https://github.com/kristenmazza"><img src="images/github-mark-15px.png"></a></div>
